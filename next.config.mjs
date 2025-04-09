@@ -13,19 +13,13 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   
-  // Optimize for Vercel deployment
-  swcMinify: true,
-  
   // Configure image optimization
   images: {
     unoptimized: true,
   },
   
   // Enable experimental features for better performance
-  experimental: {
-    // Only include features well-supported by Vercel
-    serverActions: true,
-  },
+  experimental: {}
 }
 
 export default nextConfig

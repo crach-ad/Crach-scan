@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { 
@@ -24,7 +24,8 @@ import { Search, Loader2, Plus, Mail, User, QrCode } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Attendee } from '@/lib/google-sheets/service';
 
-export default function ClientsPage() {
+// Separate component that uses search params so we can wrap it in Suspense
+function ClientsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [clients, setClients] = useState<Attendee[]>([]);
@@ -184,5 +185,14 @@ export default function ClientsPage() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+// Main page component with Suspense boundary
+export default function ClientsPage() {
+  return (
+    <Suspense fallback={<div className="flex justify-center items-center h-screen"><Loader2 className="w-8 h-8 animate-spin" /></div>}>
+      <ClientsContent />
+    </Suspense>
   );
 }
