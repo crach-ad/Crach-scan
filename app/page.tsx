@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 
+// Deployment trigger: 2025-04-09 18:49
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
