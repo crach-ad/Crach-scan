@@ -1,51 +1,31 @@
-let userConfig = undefined
-try {
-  // try to import ESM first
-  userConfig = await import('./v0-user-next.config.mjs')
-} catch (e) {
-  try {
-    // fallback to CJS import
-    userConfig = await import("./v0-user-next.config");
-  } catch (innerError) {
-    // ignore error
-  }
-}
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Allow ESM and CommonJS to coexist
+  transpilePackages: ["@zxing/library", "@zxing/browser"],
+  
+  // Prevent build failures on linting issues
   eslint: {
     ignoreDuringBuilds: true,
   },
+  
+  // Prevent build failures on TypeScript errors
   typescript: {
     ignoreBuildErrors: true,
   },
+  
+  // Optimize for Vercel deployment
+  swcMinify: true,
+  
+  // Configure image optimization
   images: {
     unoptimized: true,
   },
+  
+  // Enable experimental features for better performance
   experimental: {
-    webpackBuildWorker: true,
-    parallelServerBuildTraces: true,
-    parallelServerCompiles: true,
+    // Only include features well-supported by Vercel
+    serverActions: true,
   },
-}
-
-if (userConfig) {
-  // ESM imports will have a "default" property
-  const config = userConfig.default || userConfig
-
-  for (const key in config) {
-    if (
-      typeof nextConfig[key] === 'object' &&
-      !Array.isArray(nextConfig[key])
-    ) {
-      nextConfig[key] = {
-        ...nextConfig[key],
-        ...config[key],
-      }
-    } else {
-      nextConfig[key] = config[key]
-    }
-  }
 }
 
 export default nextConfig
