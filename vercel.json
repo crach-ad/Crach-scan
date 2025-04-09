@@ -8,9 +8,5 @@
       "source": "/(.*)",
       "destination": "/"
     }
-  ],
-  "env": {
-    "GOOGLE_SHEET_ID": "@google_sheet_id",
-    "GOOGLE_CREDENTIALS": "@google_credentials"
-  }
+  ]
 }
